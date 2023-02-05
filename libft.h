@@ -26,5 +26,6 @@ int		ft_isprint(int c);
 int		ft_toupper(int c);
 int		ft_tolower(int c);
 int		ft_atoi(const char *str);
+char	*ft_itoa(int n);
 
 #endif
