@@ -55,5 +55,6 @@ void	*ft_calloc(size_t count, size_t size);
 
 // Put
 void	ft_putchar_fd(char c, int fd);
+void	ft_putstr_fd(char *s, int fd);
 
 #endif
