@@ -44,4 +44,7 @@ char	**ft_split(char const *s, char c);
 void	ft_striteri(char *s, void (*f) (unsigned int, char *));
 char	*ft_strmapi(char const *s, char (*f) (unsigned int, char));
 
+// mem
+void	*ft_memset(void *b, int c, size_t len);
+
 #endif

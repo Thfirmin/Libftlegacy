@@ -38,7 +38,8 @@ SRCS	= ft_isalpha.c \
 		  ft_strtrim.c \
 		  ft_split.c \
 		  ft_striteri.c \
-		  ft_strmapi.c
+		  ft_strmapi.c \
+		  ft_memset.c
 
 OBJS	= $(SRCS:.c=.o)
 # <+-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-' #
