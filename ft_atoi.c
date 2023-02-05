@@ -6,18 +6,17 @@
 /*   By: thfirmin <thfirmin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 16:37:31 by thfirmin          #+#    #+#             */
-/*   Updated: 2022/06/08 08:08:09 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/01/21 10:39:40 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-//convert ASCII string to integer
-
+// Convert ASCII string to integer
 int	ft_atoi(const char *str)
 {
-	int	atoinum;
-	int	signal;
+	int		atoinum;
+	short	signal;
 
 	signal = 1;
 	atoinum = 0;
