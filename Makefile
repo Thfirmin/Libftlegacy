@@ -45,7 +45,8 @@ SRCS	= ft_isalpha.c \
 		  ft_memchr.c \
 		  ft_memcmp.c \
 		  ft_bzero.c \
-		  ft_calloc.c
+		  ft_calloc.c \
+		  ft_putchar_fd.c
 
 OBJS	= $(SRCS:.c=.o)
 # <+-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-' #
