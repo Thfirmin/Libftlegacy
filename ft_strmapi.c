@@ -6,27 +6,28 @@
 /*   By: thfirmin <thfirmin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 02:16:31 by thfirmin          #+#    #+#             */
-/*   Updated: 2022/06/14 21:20:03 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/01/21 11:36:01 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+// Iterate a string modifying a allocated copy
 char	*ft_strmapi(char const *s, char (*f) (unsigned int, char))
 {
 	char			*str;
-	unsigned int	len;
 	unsigned int	i;
 
-	i = 0;
-	len = ft_strlen(s);
-	str = malloc(sizeof(char) * (len + 1));
+	str = malloc(sizeof(char) * (ft_strlen(s) + 1));
 	if (!str)
 		return (0);
-	while (i < len)
+	i = -1;
+	while (*(s + ++i))
 	{
-		*(str + i) = f(i, *(s + i));
-		i++;
+		if (f)
+			*(str + i) = f(i, *(s + i));
+		else
+			*(str + i) = *(s + i);
 	}
 	*(str + i) = '\0';
 	return (str);

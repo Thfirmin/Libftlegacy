@@ -6,14 +6,13 @@
 /*   By: thfirmin <thfirmin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 20:21:05 by thfirmin          #+#    #+#             */
-/*   Updated: 2022/06/08 04:30:42 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/01/20 20:49:55 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-//move byte string
-
+// Move byte string
 void	*ft_memmove(void *dst, const void *src, size_t len)
 {
 	void	*buffer;

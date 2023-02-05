@@ -6,14 +6,13 @@
 /*   By: thfirmin <thfirmin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 20:36:03 by thfirmin          #+#    #+#             */
-/*   Updated: 2022/06/08 08:26:26 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/01/21 12:15:12 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-//compare strings of n lenght
-
+// Compare strings of n lenght
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
 	size_t	count;
@@ -21,13 +20,13 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	if (!n)
 		return (0);
 	count = 0;
-	while (count < (n - 1))
+	while (-- n)
 	{
-		if (s1[count] == '\0' || s2[count] == '\0')
+		if (!*(s1 + count) || !*(s2 + count))
 			break ;
-		else if (s1[count] != s2[count])
+		else if (*(s1 + count) != *(s2 + count))
 			break ;
 		count ++;
 	}
-	return ((unsigned char) s1[count] - (unsigned char) s2[count]);
+	return ((unsigned char)(*(s1 + count) - *(s2 + count)));
 }

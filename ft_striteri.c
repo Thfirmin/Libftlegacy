@@ -6,22 +6,19 @@
 /*   By: thfirmin <thfirmin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 02:33:43 by thfirmin          #+#    #+#             */
-/*   Updated: 2022/06/15 05:35:05 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/01/21 11:26:50 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+// Iterate a string modifying itself
 void	ft_striteri(char *s, void (*f) (unsigned int, char *))
 {
-	unsigned int	len;
 	unsigned int	count;
 
-	len = ft_strlen(s);
-	count = 0;
-	while (count < len)
-	{
-		f(count, (s + count));
-		count ++;
-	}
+	count = -1;
+	while (*(s + ++count))
+		if (f)
+			f(count, (s + count));
 }
