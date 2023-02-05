@@ -25,5 +25,6 @@ int		ft_isprint(int c);
 // to
 int		ft_toupper(int c);
 int		ft_tolower(int c);
+int		ft_atoi(const char *str);
 
 #endif
