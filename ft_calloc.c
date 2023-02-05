@@ -6,19 +6,28 @@
 /*   By: thfirmin <thfirmin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 05:13:14 by thfirmin          #+#    #+#             */
-/*   Updated: 2022/06/08 08:11:58 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/01/21 10:44:20 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+// Allocates memory for an array of nmemb elements of size bytes each.
+// The memory is set to zero
 void	*ft_calloc(size_t count, size_t size)
 {
+	size_t	total;
+	void	*head;
 	void	*ptr;
 
-	ptr = malloc(count * size);
+	total = count * size;
+	if ((!count || !size) || ((total < count) || (total < size)))
+		return (0);
+	ptr = malloc(total);
 	if (!ptr)
 		return (0);
-	ft_memset(ptr, 0, count * size);
-	return (ptr);
+	head = ptr;
+	while (total --)
+		*(char *)ptr++ = '\0';
+	return (head);
 }
