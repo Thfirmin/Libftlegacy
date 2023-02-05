@@ -31,5 +31,6 @@ char	*ft_itoa(int n);
 // str
 size_t	ft_strlen(const char *str);
 char	*ft_strchr(const char *s, int c);
+char	*ft_strrchr(const char *s, int c);
 
 #endif
