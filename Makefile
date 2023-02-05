@@ -87,7 +87,7 @@ FULLER			= \e[7m
 .c.o:
 	@$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $(<:.c=.o)
 
-.PHONY:		all mclean clean fclean re
+.PHONY:		all debug mclean clean fclean re
 # <+-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-' #
 # +>                                   MANDATORY
 
@@ -98,6 +98,10 @@ $(NAME):	$(OBJS)
 	@ar -rcs $(NAME) $(OBJS)
 	@ranlib $(NAME)
 	@echo "[$(GREEN)$(BOLD)INFO$(NULL)] $(BOLD)Compiled $(NAME) library$(NULL)"
+
+debug:	CFLAGS += -g #-fsanitize=address
+
+debug:	re
 
 mclean:
 ifneq (,$(shell ls $(OBJS) 2> /dev/null))
