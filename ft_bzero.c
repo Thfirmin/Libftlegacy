@@ -6,15 +6,15 @@
 /*   By: thfirmin <thfirmin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 16:37:55 by thfirmin          #+#    #+#             */
-/*   Updated: 2022/05/15 09:57:57 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/01/21 10:40:27 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-//write zeroes to a n byte string
-
+// Write zeroes to a n byte string
 void	ft_bzero(void *s, size_t n)
 {
-	ft_memset(s, 0, n);
+	while (n --)
+		*(char *)s++ = '\0';
 }
