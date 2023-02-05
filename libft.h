@@ -28,4 +28,7 @@ int		ft_tolower(int c);
 int		ft_atoi(const char *str);
 char	*ft_itoa(int n);
 
+// str
+size_t	ft_strlen(const char *str);
+
 #endif
