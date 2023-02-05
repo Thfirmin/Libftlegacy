@@ -34,35 +34,35 @@ follow this steps:
 1. Download libft `tar or zip`;
 	* zip
 		```Bash
-		curl -L https://github.com/Thfirmin/Libft/archive/refs/tags/v2.0.zip -o libft.zip
+		curl -L https://github.com/Thfirmin/Libft/archive/refs/tags/v1.1.zip -o libft.zip
 
 		or
 
-		wget https://github.com/Thfirmin/Libft/archive/refs/tags/v2.0.zip && mv v2.0.zip libft.zip
+		wget https://github.com/Thfirmin/Libft/archive/refs/tags/v1.1.zip && mv v1.1.zip libft.zip
 		```
 	* tar
 		```Bash
-		curl -L https://github.com/Thfirmin/Libft/archive/refs/tags/v2.0.tar.gz -o libft.tar.gz
+		curl -L https://github.com/Thfirmin/Libft/archive/refs/tags/v1.1.tar.gz -o libft.tar.gz
 
 		or
 
-		wget https://github.com/Thfirmin/Libft/archive/refs/tags/v2.0.tar.gz && mv v2.0.tar.gz libft.tar.gz
+		wget https://github.com/Thfirmin/Libft/archive/refs/tags/v1.1.tar.gz && mv v2.0.tar.gz libft.tar.gz
 		```
 2. Extract libft project;
 	* zip
 		```bash
 		{
 			unzip libft.zip
-			mv Libft-2.0/libft/ .
-			rm -rf Libft-2.0/
+			mv Libft-1.1/ libft
+			rm libft.zip/
 		}
 		```
 	* tar
 		```Bash
 		{
 			tar -xf libft.tar.gz
-			mv Libft-2.0/libft/ .
-			rm -rf Libft-2.0/
+			mv Libft-1.1/ libft
+			rm libft.tar.gz
 		}
 		```
 3. Use `Make` command to compile the library;
