@@ -47,7 +47,8 @@ SRCS	= ft_isalpha.c \
 		  ft_bzero.c \
 		  ft_calloc.c \
 		  ft_putchar_fd.c \
-		  ft_putstr_fd.c
+		  ft_putstr_fd.c \
+		  ft_putendl_fd.c
 
 OBJS	= $(SRCS:.c=.o)
 # <+-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-' #
