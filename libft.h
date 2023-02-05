@@ -46,5 +46,6 @@ char	*ft_strmapi(char const *s, char (*f) (unsigned int, char));
 
 // mem
 void	*ft_memset(void *b, int c, size_t len);
+void	*ft_memcpy(void *dst, const void *src, size_t n);
 
 #endif
