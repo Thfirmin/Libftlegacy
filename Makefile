@@ -6,7 +6,7 @@
 #    By: thfirmin <thfirmin@student.42.rio>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/06 14:23:56 by thfirmin          #+#    #+#              #
-#    Updated: 2023/01/21 13:43:55 by thfirmin         ###   ########.fr        #
+#    Updated: 2023/03/07 19:06:48 by thfirmin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,6 +59,10 @@ CC			= cc
 CFLAGS		= -Wall -Wextra -Werror
 INCLUDE		= -I ./
 MAKEFLAGS	+= --no-print-directory
+ifneq ($(VERBOSE),1)
+MAKEFLAGS	+= --silent
+endif
+
 # <+-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-' #
 # +>                                     CODES 
 
@@ -85,7 +89,7 @@ FULLER			= \e[7m
 # +>                                     RULES
 
 .c.o:
-	@$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $(<:.c=.o)
+	$(CC) $(CFLAGS) $(DEBUG) $(INCLUDE) -c $< -o $(<:.c=.o)
 
 .PHONY:		all debug mclean clean fclean re
 # <+-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-' #
@@ -95,18 +99,14 @@ all:		$(NAME)
 
 $(NAME):	$(OBJS)
 	@echo "[$(YELLOW)$(BOLD)INFO$(NULL)] $(UNDLINE)Compiling$(NULL) $(NAME) library"
-	@ar -rcs $(NAME) $(OBJS)
-	@ranlib $(NAME)
+	ar -rcs $(NAME) $(OBJS)
+	ranlib $(NAME)
 	@echo "[$(GREEN)$(BOLD)INFO$(NULL)] $(BOLD)Compiled $(NAME) library$(NULL)"
-
-debug:	CFLAGS += -g #-fsanitize=address
-
-debug:	re
 
 mclean:
 ifneq (,$(shell ls $(OBJS) 2> /dev/null))
 	@echo "[$(YELLOW)$(BOLD)INFO$(NULL)] $(UNDLINE)Deleting$(NULL) $(NAME) objects"
-	@rm -rf $(OBJS)
+	rm -rf $(OBJS)
 	@echo "[$(BLUE)$(BOLD)INFO$(NULL)] $(BOLD)Deleted $(NAME) objects$(NULL)"
 endif
 
