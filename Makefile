@@ -6,7 +6,7 @@
 #    By: thfirmin <thfirmin@student.42.rio>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/06 14:23:56 by thfirmin          #+#    #+#              #
-#    Updated: 2023/03/07 19:06:48 by thfirmin         ###   ########.fr        #
+#    Updated: 2023/03/07 20:28:17 by thfirmin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,12 +51,24 @@ SRCS	= ft_isalpha.c \
 		  ft_putendl_fd.c \
 		  ft_putnbr_fd.c
 
+BN_SRCS	= ft_lstadd_back_bonus.c \
+		  ft_lstadd_front_bonus.c \
+		  ft_lstclear_bonus.c \
+		  ft_lstdelone_bonus.c \
+		  ft_lstiter_bonus.c \
+		  ft_lstlast_bonus.c \
+		  ft_lstmap_bonus.c \
+		  ft_lstnew_bonus.c \
+		  ft_lstsize_bonus.c \
+
 OBJS	= $(SRCS:.c=.o)
+
+BN_OBJS	= $(subst .c,.o,$(BN_SRCS))
 # <+-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-' #
 # +>                                    ALIASES 
 
 CC			= cc
-CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= -Wall -Wextra -Werror $(DEBUG)
 INCLUDE		= -I ./
 MAKEFLAGS	+= --no-print-directory
 ifneq ($(VERBOSE),1)
@@ -89,9 +101,9 @@ FULLER			= \e[7m
 # +>                                     RULES
 
 .c.o:
-	$(CC) $(CFLAGS) $(DEBUG) $(INCLUDE) -c $< -o $(<:.c=.o)
+	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $(<:.c=.o)
 
-.PHONY:		all debug mclean clean fclean re
+.PHONY:		all bonus mclean bclean clean fclean re bre
 # <+-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-' #
 # +>                                   MANDATORY
 
@@ -112,15 +124,46 @@ endif
 
 re:			fclean all
 # <+-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-' #
+# +>                                     BONUS
+
+bonus:	all $(BN_OBJS)
+
+$(BN_OBJS): $(BN_SRCS)
+	@if [ "$(BN_OBJSRC)" = "$(findstring $(BN_OBJSRC),$?)" ]; then \
+		if [ "$(VERBOSE)" = "1" ]; then \
+			echo "$(CC) $(CFLAGS) $(INCLUDE) -c $*.c -o $@"; \
+		fi; \
+		$(CC) $(CFLAGS) $(INCLUDE) -c $*.c -o $@; \
+	else \
+		touch $@; \
+	fi
+	@if [ "$@" = "$(lastword $(BN_OBJS))" ]; then \
+		echo "[$(YELLOW)$(BOLD)INFO$(NULL)] $(UNDLINE)Compiling$(NULL) $(NAME) bonus"; \
+		if [ "$(VERBOSE)" = "1" ]; then echo "ar -rcs $(NAME) $(BN_OBJS)"; fi; \
+		ar -rcs $(NAME) $(BN_OBJS); \
+		if [ "$(VERBOSE)" = "1" ]; then echo "ranlib $(NAME)"; fi; \
+		ranlib $(NAME); \
+		echo "[$(GREEN)$(BOLD)INFO$(NULL)] $(BOLD)Compiled $(NAME) bonus$(NULL)"; \
+	fi
+
+bclean:
+ifneq (,$(shell ls $(BN_OBJS) 2> /dev/null))
+	echo "[$(YELLOW)$(BOLD)INFO$(NULL)] $(UNDLINE)Deleting$(NULL) $(NAME) bonus objects"
+	$(RM) $(BN_OBJS)
+	echo "[$(BLUE)$(BOLD)INFO$(NULL)] $(BOLD)Deleted $(NAME) bonus objects$(NULL)"
+endif
+
+bre:	fclean bonus
+# <+-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-' #
 # +>                                     CLEAN 
 
-clean: 		mclean
+clean: 		mclean bclean
 
 fclean:		clean
 ifneq (,$(shell ls $(NAME) 2> /dev/null))
-	@echo "[$(YELLOW)$(BOLD)INFO$(NULL)] $(UNDLINE)Deleting$(NULL) $(NAME) library$(NULL)"
-	@rm -rf $(NAME)
-	@echo "[$(RED)$(BOLD)INFO$(NULL)] $(BOLD)Deleted $(NAME) library$(NULL)"
+	echo "[$(YELLOW)$(BOLD)INFO$(NULL)] $(UNDLINE)Deleting$(NULL) $(NAME) library$(NULL)"
+	rm -rf $(NAME)
+	echo "[$(RED)$(BOLD)INFO$(NULL)] $(BOLD)Deleted $(NAME) library$(NULL)"
 endif
 # <+-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-' #
 # vim: fdm=marker fmr=+>,<+ ts=4 sw=4 nofen noet:
