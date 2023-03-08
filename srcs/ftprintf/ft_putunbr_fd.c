@@ -1,17 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sumary.h                                           :+:      :+:    :+:   */
+/*   ft_putunbr_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thfirmin <thfirmin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thfirmin <thiagofirmino2001@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/07 20:37:33 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/03/07 20:39:22 by thfirmin         ###   ########.fr       */
+/*   Created: 2022/11/07 12:45:58 by thfirmin          #+#    #+#             */
+/*   Updated: 2022/11/07 13:20:02 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SUMARY_H
-# define SUMARY_H
-# include "includes/libft.h"
+#include "ft_printf.h"
+#include "libft.h"
 
-#endif
+int	ft_putunbr_fd(unsigned int unbr, int fd)
+{
+	int	len;
+
+	len = 0;
+	if (unbr >= 10)
+		len += ft_putunbr_fd((unbr / 10), fd);
+	len += ft_putchar_fd(('0' + (unbr % 10)), fd);
+	return (len);
+}
