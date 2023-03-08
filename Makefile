@@ -3,82 +3,38 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: thfirmin <thfirmin@student.42.rio>         +#+  +:+       +#+         #
+#    By: thfirmin <thiagofirmino2001@gmail.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/10/06 14:23:56 by thfirmin          #+#    #+#              #
-#    Updated: 2023/03/07 20:28:17 by thfirmin         ###   ########.fr        #
+#    Created: 2022/12/11 21:07:07 by thfirmin          #+#    #+#              #
+#    Updated: 2023/03/07 20:52:41 by thfirmin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-# +>                                     NAMES 
+# +>                                     NAME 
 
 NAME	= libft.a
 # <+-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-' #
+# +>                                     PATHS 
+
+PTH_SRCS	= srcs/
+# <+-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-' #
 # +>                                    SOURCES 
 
-SRCS	= ft_isalpha.c \
-		  ft_isdigit.c \
-		  ft_isalnum.c \
-		  ft_isascii.c \
-		  ft_isprint.c \
-		  ft_toupper.c \
-		  ft_tolower.c \
-		  ft_atoi.c \
-		  ft_itoa.c \
-		  ft_strlen.c \
-		  ft_strchr.c \
-		  ft_strrchr.c \
-		  ft_strncmp.c \
-		  ft_strlcpy.c \
-		  ft_strlcat.c \
-		  ft_strnstr.c \
-		  ft_strdup.c \
-		  ft_substr.c \
-		  ft_strjoin.c \
-		  ft_strtrim.c \
-		  ft_split.c \
-		  ft_striteri.c \
-		  ft_strmapi.c \
-		  ft_memset.c \
-		  ft_memcpy.c \
-		  ft_memmove.c \
-		  ft_memchr.c \
-		  ft_memcmp.c \
-		  ft_bzero.c \
-		  ft_calloc.c \
-		  ft_putchar_fd.c \
-		  ft_putstr_fd.c \
-		  ft_putendl_fd.c \
-		  ft_putnbr_fd.c
+SRCS	= ft \
 
-BN_SRCS	= ft_lstadd_back_bonus.c \
-		  ft_lstadd_front_bonus.c \
-		  ft_lstclear_bonus.c \
-		  ft_lstdelone_bonus.c \
-		  ft_lstiter_bonus.c \
-		  ft_lstlast_bonus.c \
-		  ft_lstmap_bonus.c \
-		  ft_lstnew_bonus.c \
-		  ft_lstsize_bonus.c \
-
-OBJS	= $(SRCS:.c=.o)
-
-BN_OBJS	= $(subst .c,.o,$(BN_SRCS))
+LIBS	= $(addprefix $(PTH_SRCS),$(SRCS))
 # <+-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-' #
 # +>                                    ALIASES 
 
-CC			= cc
-CFLAGS		= -Wall -Wextra -Werror $(DEBUG)
-INCLUDE		= -I ./
 MAKEFLAGS	+= --no-print-directory
 ifneq ($(VERBOSE),1)
-MAKEFLAGS	+= --silent
+	MAKEFLAGS += --silent
 endif
-
+MAKE	= make -C
 # <+-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-' #
 # +>                                     CODES 
 
-NULL			= \e[m
+BLANK			= \e[m
 RED				= \e[38;5;9m
 YELLOW			= \e[38;5;11m
 GREEN			= \e[38;5;2m
@@ -87,7 +43,7 @@ PURPLE			= \e[38;5;5m
 PINK			= \e[38;5;13m
 WHITE			= \e[38;5;15m
 
-BOLD			= \e[1m
+STRONG			= \e[1m
 SHADOW			= \e[2m
 ITALIC			= \e[3m
 UNDLINE			= \e[4m
@@ -98,72 +54,42 @@ UPALIGN			= \e[73m
 DWALIGN			= \e[74m
 FULLER			= \e[7m
 # <+-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-' #
-# +>                                     RULES
-
-.c.o:
-	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $(<:.c=.o)
-
-.PHONY:		all bonus mclean bclean clean fclean re bre
-# <+-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-' #
-# +>                                   MANDATORY
+# +>                                     RULES 
 
 all:		$(NAME)
 
-$(NAME):	$(OBJS)
-	@echo "[$(YELLOW)$(BOLD)INFO$(NULL)] $(UNDLINE)Compiling$(NULL) $(NAME) library"
-	ar -rcs $(NAME) $(OBJS)
-	ranlib $(NAME)
-	@echo "[$(GREEN)$(BOLD)INFO$(NULL)] $(BOLD)Compiled $(NAME) library$(NULL)"
+$(NAME):	update_libs
 
-mclean:
-ifneq (,$(shell ls $(OBJS) 2> /dev/null))
-	@echo "[$(YELLOW)$(BOLD)INFO$(NULL)] $(UNDLINE)Deleting$(NULL) $(NAME) objects"
-	rm -rf $(OBJS)
-	@echo "[$(BLUE)$(BOLD)INFO$(NULL)] $(BOLD)Deleted $(NAME) objects$(NULL)"
+bonus:	UPFLAG += bonus
+
+bonus:	update_libs
+
+mclean:	UPFLAG += mclean
+
+mclean:	update_libs
+
+bclean:	UPFLAG += bclean
+
+bclean:	update_libs
+
+clean:	UPFLAG += clean
+
+clean:	update_libs
+
+fclean:	UPFLAG += fclean
+
+fclean:	update_libs
+ifneq (,$(shell ls $(NAME) 2> /dev/null))
+	rm -rf $(NAME)
 endif
+
+update_libs:
+	$(foreach libs,$(LIBS),$(MAKE) $(libs) $(UPFLAG);)
 
 re:			fclean all
-# <+-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-' #
-# +>                                     BONUS
 
-bonus:	all $(BN_OBJS)
+bre:		fclean bonus
 
-$(BN_OBJS): $(BN_SRCS)
-	@if [ "$(BN_OBJSRC)" = "$(findstring $(BN_OBJSRC),$?)" ]; then \
-		if [ "$(VERBOSE)" = "1" ]; then \
-			echo "$(CC) $(CFLAGS) $(INCLUDE) -c $*.c -o $@"; \
-		fi; \
-		$(CC) $(CFLAGS) $(INCLUDE) -c $*.c -o $@; \
-	else \
-		touch $@; \
-	fi
-	@if [ "$@" = "$(lastword $(BN_OBJS))" ]; then \
-		echo "[$(YELLOW)$(BOLD)INFO$(NULL)] $(UNDLINE)Compiling$(NULL) $(NAME) bonus"; \
-		if [ "$(VERBOSE)" = "1" ]; then echo "ar -rcs $(NAME) $(BN_OBJS)"; fi; \
-		ar -rcs $(NAME) $(BN_OBJS); \
-		if [ "$(VERBOSE)" = "1" ]; then echo "ranlib $(NAME)"; fi; \
-		ranlib $(NAME); \
-		echo "[$(GREEN)$(BOLD)INFO$(NULL)] $(BOLD)Compiled $(NAME) bonus$(NULL)"; \
-	fi
-
-bclean:
-ifneq (,$(shell ls $(BN_OBJS) 2> /dev/null))
-	echo "[$(YELLOW)$(BOLD)INFO$(NULL)] $(UNDLINE)Deleting$(NULL) $(NAME) bonus objects"
-	$(RM) $(BN_OBJS)
-	echo "[$(BLUE)$(BOLD)INFO$(NULL)] $(BOLD)Deleted $(NAME) bonus objects$(NULL)"
-endif
-
-bre:	fclean bonus
-# <+-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-' #
-# +>                                     CLEAN 
-
-clean: 		mclean bclean
-
-fclean:		clean
-ifneq (,$(shell ls $(NAME) 2> /dev/null))
-	echo "[$(YELLOW)$(BOLD)INFO$(NULL)] $(UNDLINE)Deleting$(NULL) $(NAME) library$(NULL)"
-	rm -rf $(NAME)
-	echo "[$(RED)$(BOLD)INFO$(NULL)] $(BOLD)Deleted $(NAME) library$(NULL)"
-endif
+.PHONY:		all update_libs bonus mclean bclean clean fclean re bre
 # <+-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-' #
 # vim: fdm=marker fmr=+>,<+ ts=4 sw=4 nofen noet:
