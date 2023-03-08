@@ -6,15 +6,19 @@
 /*   By: thfirmin <thfirmin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 05:41:39 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/01/21 11:17:24 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/03/07 21:13:45 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 // Output a string in the gived file descriptor
-void	ft_putstr_fd(char *s, int fd)
+int	ft_putstr_fd(char *s, int fd)
 {
+	int	len;
+
+	len = 0;
 	while (*s)
-		write(fd, s++, 1);
+		len += write(fd, s++, 1);
+	return (len);
 }

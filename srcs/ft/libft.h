@@ -6,7 +6,7 @@
 /*   By: thfirmin <thfirmin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 19:50:29 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/03/07 20:18:22 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/03/07 21:14:50 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,10 @@ void	ft_bzero(void *s, size_t n);
 void	*ft_calloc(size_t count, size_t size);
 
 // Put
-void	ft_putchar_fd(char c, int fd);
-void	ft_putstr_fd(char *s, int fd);
-void	ft_putendl_fd(char *s, int fd);
-void	ft_putnbr_fd(int n, int fd);
+int		ft_putchar_fd(char c, int fd);
+int		ft_putstr_fd(char *s, int fd);
+int		ft_putendl_fd(char *s, int fd);
+int		ft_putnbr_fd(int n, int fd);
 
 // Bonus
 void	ft_lstadd_back(t_list **lst, t_list *new);

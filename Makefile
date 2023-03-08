@@ -6,7 +6,7 @@
 #    By: thfirmin <thiagofirmino2001@gmail.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/11 21:07:07 by thfirmin          #+#    #+#              #
-#    Updated: 2023/03/07 20:52:41 by thfirmin         ###   ########.fr        #
+#    Updated: 2023/03/07 23:05:56 by thfirmin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ PTH_SRCS	= srcs/
 # +>                                    SOURCES 
 
 SRCS	= ft \
+		  ftprintf
 
 LIBS	= $(addprefix $(PTH_SRCS),$(SRCS))
 # <+-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-' #
@@ -60,31 +61,26 @@ all:		$(NAME)
 
 $(NAME):	update_libs
 
-bonus:	UPFLAG += bonus
+update_libs:
+	$(foreach libs,$(LIBS),$(MAKE) $(libs);)
 
-bonus:	update_libs
+bonus:
+	$(foreach libs,$(LIBS),$(MAKE) $(libs) bonus;)
 
-mclean:	UPFLAG += mclean
+mclean:
+	$(foreach libs,$(LIBS),$(MAKE) $(libs) mclean;)
 
-mclean:	update_libs
+bclean:
+	$(foreach libs,$(LIBS),$(MAKE) $(libs) bclean;)
 
-bclean:	UPFLAG += bclean
+clean:
+	$(foreach libs,$(LIBS),$(MAKE) $(libs) clean;)
 
-bclean:	update_libs
-
-clean:	UPFLAG += clean
-
-clean:	update_libs
-
-fclean:	UPFLAG += fclean
-
-fclean:	update_libs
+fclean:
+	$(foreach libs,$(LIBS),$(MAKE) $(libs) fclean;)
 ifneq (,$(shell ls $(NAME) 2> /dev/null))
 	rm -rf $(NAME)
 endif
-
-update_libs:
-	$(foreach libs,$(LIBS),$(MAKE) $(libs) $(UPFLAG);)
 
 re:			fclean all
 
