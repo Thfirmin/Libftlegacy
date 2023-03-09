@@ -6,7 +6,7 @@
 #    By: thfirmin <thfirmin@student.42.rio>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/06 14:23:56 by thfirmin          #+#    #+#              #
-#    Updated: 2023/03/07 20:55:28 by thfirmin         ###   ########.fr        #
+#    Updated: 2023/03/08 21:52:29 by thfirmin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,6 +64,8 @@ BN_SRCS	= ft_lstadd_back_bonus.c \
 OBJS	= $(SRCS:.c=.o)
 
 BN_OBJS	= $(subst .c,.o,$(BN_SRCS))
+
+BN_OBJSRC = $(subst .o,.c,$@)
 # <+-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-' #
 # +>                                    ALIASES 
 
@@ -107,18 +109,16 @@ FULLER			= \e[7m
 # <+-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-' #
 # +>                                   MANDATORY
 
-all:		$(NAME) mexport_lib
+all:	$(NAME)
 
 $(NAME):	$(OBJS)
 	@echo "[$(YELLOW)$(BOLD)INFO$(NULL)] $(UNDLINE)Compiling$(NULL) $(NAME) library"
 	ar -rcs $(NAME) $(OBJS)
 	ranlib $(NAME)
 	@echo "[$(GREEN)$(BOLD)INFO$(NULL)] $(BOLD)Compiled $(NAME) library$(NULL)"
-	
-mexport_lib:
 	@echo "[$(YELLOW)$(BOLD)INFO$(NULL)] $(UNDLINE)Exporting$(NULL) $(NAME) library"
-	ar -rcs ../../libft.a $(OBJS)
-	ranlib ../../libft.a
+	ar -rcs $(MASTERLIB) $(OBJS)
+	ranlib $(MASTERLIB)
 	@echo "[$(GREEN)$(BOLD)INFO$(NULL)] $(BOLD)Exported $(NAME) library$(NULL)"
 
 mclean:
@@ -132,7 +132,7 @@ re:			fclean all
 # <+-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-' #
 # +>                                     BONUS
 
-bonus:	all $(BN_OBJS) bexport_lib
+bonus:	all $(BN_OBJS)
 
 $(BN_OBJS): $(BN_SRCS)
 	@if [ "$(BN_OBJSRC)" = "$(findstring $(BN_OBJSRC),$?)" ]; then \
@@ -150,19 +150,19 @@ $(BN_OBJS): $(BN_SRCS)
 		if [ "$(VERBOSE)" = "1" ]; then echo "ranlib $(NAME)"; fi; \
 		ranlib $(NAME); \
 		echo "[$(GREEN)$(BOLD)INFO$(NULL)] $(BOLD)Compiled $(NAME) bonus$(NULL)"; \
+		echo "[$(YELLOW)$(BOLD)INFO$(NULL)] $(UNDLINE)Exporting$(NULL) $(NAME) bonus"; \
+		if [ "$(VERBOSE)" = "1" ]; then echo "ar -rcs $(MASTERLIB) $(BN_OBJS)"; fi; \
+		ar -rcs $(MASTERLIB) $(BN_OBJS); \
+		if [ "$(VERBOSE)" = "1" ]; then echo "ranlib $(MASTERLIB)"; fi; \
+		ranlib $(MASTERLIB); \
+		echo "[$(GREEN)$(BOLD)INFO$(NULL)] $(BOLD)Exported $(NAME) bonus$(NULL)"; \
 	fi
-
-bexport_lib:
-	@echo "[$(YELLOW)$(BOLD)INFO$(NULL)] $(UNDLINE)Exporting$(NULL) $(NAME) bonus"
-	ar -rcs ../../libft.a $(BN_OBJS)
-	ranlib ../../libft.a
-	@echo "[$(GREEN)$(BOLD)INFO$(NULL)] $(BOLD)Exported $(NAME) bonus$(NULL)"
 
 bclean:
 ifneq (,$(shell ls $(BN_OBJS) 2> /dev/null))
-	echo "[$(YELLOW)$(BOLD)INFO$(NULL)] $(UNDLINE)Deleting$(NULL) $(NAME) bonus objects"
+	@echo "[$(YELLOW)$(BOLD)INFO$(NULL)] $(UNDLINE)Deleting$(NULL) $(NAME) bonus objects"
 	$(RM) $(BN_OBJS)
-	echo "[$(BLUE)$(BOLD)INFO$(NULL)] $(BOLD)Deleted $(NAME) bonus objects$(NULL)"
+	@echo "[$(BLUE)$(BOLD)INFO$(NULL)] $(BOLD)Deleted $(NAME) bonus objects$(NULL)"
 endif
 
 bre:	fclean bonus
@@ -173,9 +173,9 @@ clean: 		mclean bclean
 
 fclean:		clean
 ifneq (,$(shell ls $(NAME) 2> /dev/null))
-	echo "[$(YELLOW)$(BOLD)INFO$(NULL)] $(UNDLINE)Deleting$(NULL) $(NAME) library$(NULL)"
+	@echo "[$(YELLOW)$(BOLD)INFO$(NULL)] $(UNDLINE)Deleting$(NULL) $(NAME) library$(NULL)"
 	rm -rf $(NAME)
-	echo "[$(RED)$(BOLD)INFO$(NULL)] $(BOLD)Deleted $(NAME) library$(NULL)"
+	@echo "[$(RED)$(BOLD)INFO$(NULL)] $(BOLD)Deleted $(NAME) library$(NULL)"
 endif
 # <+-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-' #
 # vim: fdm=marker fmr=+>,<+ ts=4 sw=4 nofen noet:
