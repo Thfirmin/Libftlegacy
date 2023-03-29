@@ -6,7 +6,7 @@
 #    By: thfirmin <thiagofirmino2001@gmail.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/11 21:07:07 by thfirmin          #+#    #+#              #
-#    Updated: 2023/03/09 11:50:15 by thfirmin         ###   ########.fr        #
+#    Updated: 2023/03/28 23:37:22 by thfirmin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,12 +61,10 @@ FULLER			= \e[7m
 # <+-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-' #
 # +>                                     RULES 
 
-all:		$(NAME)
+all:		$(SRCS)
 
-$(NAME):	update_libs
-
-update_libs:
-	$(foreach libs,$(LIBS),$(MAKE) $(libs);)
+$(SRCS):
+	$(MAKE) $(PTH_SRCS)$@
 
 bonus:
 	$(foreach libs,$(LIBS),$(MAKE) $(libs) bonus;)
