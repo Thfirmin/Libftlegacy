@@ -6,15 +6,22 @@
 #    By: thfirmin <thfirmin@student.42.rio>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/06 14:23:56 by thfirmin          #+#    #+#              #
-#    Updated: 2023/03/28 23:43:26 by thfirmin         ###   ########.fr        #
+#    Updated: 2023/04/02 07:39:15 by thfirmin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # +>                                     NAMES 
 
-NAME	= libft.a
+NAME	= $(MASTERLIB)
+
+PROJ	= libft
 # <+-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-' #
-# +>                                    SOURCES 
+# +>                                    CONFIG
+
+CC	= cc
+CFLAGS	= -Wall -Wextra -Werror
+# <+-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-' #
+# +>                                    SOURCES
 
 SRCS	= ft_isalpha.c \
 		  ft_isdigit.c \
@@ -59,24 +66,16 @@ BN_SRCS	= ft_lstadd_back_bonus.c \
 		  ft_lstlast_bonus.c \
 		  ft_lstmap_bonus.c \
 		  ft_lstnew_bonus.c \
-		  ft_lstsize_bonus.c \
+		  ft_lstsize_bonus.c
 
 OBJS	= $(SRCS:.c=.o)
 
 BN_OBJS	= $(subst .c,.o,$(BN_SRCS))
 
-BN_OBJSRC = $(subst .o,.c,$@)
 # <+-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-' #
 # +>                                    ALIASES 
 
-CC			= cc
-CFLAGS		= -Wall -Wextra -Werror $(DEBUG)
-INCLUDE		= -I ./
-MAKEFLAGS	+= --no-print-directory
-ifneq ($(VERBOSE),1)
-MAKEFLAGS	+= --silent
-endif
-
+BN_OTOC	= $(subst .o,.c,$@)
 # <+-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-' #
 # +>                                     CODES 
 
@@ -103,64 +102,66 @@ FULLER			= \e[7m
 # +>                                     RULES
 
 .c.o:
-	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $(<:.c=.o)
+	$(CC) $(CFLAGS) $(DFLAGS) $(OFLAGS) $(IFLAGS) -c $< $(LFLAGS) -o $(<:.c=.o)
 
-.PHONY:		all bonus mclean bclean clean fclean re bre
+all:	$(NAME)
+
+re:	fclean all
+
+.PHONY: all clean fclean re
 # <+-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-' #
 # +>                                   MANDATORY
 
-all:	$(MASTERLIB)
-
-$(MASTERLIB):	$(OBJS)
-	@echo "[$(YELLOW)$(BOLD)INFO$(NULL)] $(UNDLINE)Compiling$(NULL) $(NAME) library"
-	ar -rcs $(MASTERLIB) $(OBJS)
-	ranlib $(MASTERLIB)
-	@echo "[$(GREEN)$(BOLD)INFO$(NULL)] $(BOLD)Compiled $(NAME) library$(NULL)"
+$(NAME):	$(OBJS)
+	@echo "[${YELLOW}${BOLD}INFO${NULL}] ${UNDLINE}Compiling${NULL} ${PROJ} library" $(REDIR)
+	ar -rcs $(NAME) $(OBJS)
+	ranlib $(NAME)
+	@echo "[${GREEN}${BOLD}INFO${NULL}] ${BOLD}Compiled ${PROJ} library${NULL}" $(REDIR)
 
 mclean:
 ifneq (,$(shell ls $(OBJS) 2> /dev/null))
-	@echo "[$(YELLOW)$(BOLD)INFO$(NULL)] $(UNDLINE)Deleting$(NULL) $(NAME) objects"
-	rm -rf $(OBJS)
-	@echo "[$(BLUE)$(BOLD)INFO$(NULL)] $(BOLD)Deleted $(NAME) objects$(NULL)"
+	@echo "[${YELLOW}${BOLD}INFO${NULL}] ${UNDLINE}Deleting${NULL} ${PROJ} objects" $(REDIR)
+	rm -rf $(shell ls $(OBJS) 2> /dev/null)
+	@echo "[${BLUE}${BOLD}INFO${NULL}] ${BOLD}Deleted ${PROJ} objects${NULL}" $(REDIR)
 endif
 
-re:			fclean all
+re:		fclean all
 # <+-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-' #
 # +>                                     BONUS
 
 bonus:	all $(BN_OBJS)
 
-$(BN_OBJS): $(BN_SRCS)
-	@if [ "$(BN_OBJSRC)" = "$(findstring $(BN_OBJSRC),$?)" ]; then \
-		if [ "$(VERBOSE)" = "1" ]; then \
-			echo "$(CC) $(CFLAGS) $(INCLUDE) -c $*.c -o $@"; \
+$(BN_OBJS):	$(BN_SRCS)
+	@if [ "$(BN_OTOC)" = "$(findstring $(BN_OTOC),$?)" ]; then \
+		if [ "$(LOG)" = "0" ]; then \
+			printf "${CC} ${CFLAGS} ${DFLAGS} ${OFLAGS} ${IFLAGS} -c $*.c ${LFLAGS} -o $@\n"; \
 		fi; \
-		$(CC) $(CFLAGS) $(INCLUDE) -c $*.c -o $@; \
+		$(CC) $(CFLAGS) $(DFLAGS) $(OFLAGS) $(IFLAGS) -c $*.c $(LFLAGS) -o $@; \
 	else \
 		touch $@; \
 	fi
 	@if [ "$@" = "$(lastword $(BN_OBJS))" ]; then \
-		echo "[$(YELLOW)$(BOLD)INFO$(NULL)] $(UNDLINE)Compiling$(NULL) $(NAME) bonus"; \
-		if [ "$(VERBOSE)" = "1" ]; then echo "ar -rcs $(MASTERLIB) $(BN_OBJS)"; fi; \
+		echo "[${YELLOW}${BOLD}INFO${NULL}] ${UNDINE}Compiling${NULL} ${PROJ} bonus" $(REDIR); \
+		if [ "$(LOG)" = "0" ]; then printf "ar -rcs ${MASTERLIB} ${BN_OBJS}\n"; fi; \
 		ar -rcs $(MASTERLIB) $(BN_OBJS); \
-		if [ "$(VERBOSE)" = "1" ]; then echo "ranlib $(MASTERLIB)"; fi; \
+		if [ "$(LOG)" = "0" ]; then printf "ranlib ${MASTERLIB}\n"; fi; \
 		ranlib $(MASTERLIB); \
-		echo "[$(GREEN)$(BOLD)INFO$(NULL)] $(BOLD)Compiled $(NAME) bonus$(NULL)"; \
+		echo "[${GREEN}${BOLD}INFO${NULL}] ${BOLD}Compiled ${PROJ} bonus${NULL}" $(REDIR); \
 	fi
 
 bclean:
 ifneq (,$(shell ls $(BN_OBJS) 2> /dev/null))
-	@echo "[$(YELLOW)$(BOLD)INFO$(NULL)] $(UNDLINE)Deleting$(NULL) $(NAME) bonus objects"
-	$(RM) $(BN_OBJS)
-	@echo "[$(BLUE)$(BOLD)INFO$(NULL)] $(BOLD)Deleted $(NAME) bonus objects$(NULL)"
+	@echo "[${YELLOW}${BOLD}INFO${NULL}] ${UNDLINE}Deleting${NULL} ${PROJ} bonus objects" $(REDIR)
+	rm -rf $(shell ls $(BN_OBJS) 2> /dev/null)
+	@echo "[${BLUE}${BOLD}INFO${NULL}] ${BOLD}Deleted ${PROJ} bonus objects${NULL}" $(REDIR)
 endif
 
 bre:	fclean bonus
 # <+-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-' #
 # +>                                     CLEAN 
 
-clean: 		mclean bclean
+clean:	mclean bclean
 
-fclean:		clean
+fclean:	clean
 # <+-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-' #
 # vim: fdm=marker fmr=+>,<+ ts=4 sw=4 nofen noet:

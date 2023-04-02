@@ -3,36 +3,31 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: thfirmin <thfirmin@student.42.rio>         +#+  +:+       +#+         #
+#    By: thfirmin <thfirmin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/10/06 14:23:56 by thfirmin          #+#    #+#              #
-#    Updated: 2023/03/28 23:45:48 by thfirmin         ###   ########.fr        #
+#    Created: 2023/04/01 20:52:29 by thfirmin          #+#    #+#              #
+#    Updated: 2023/04/02 07:44:35 by thfirmin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # +>                                     NAMES 
 
-NAME	= libftprintf.a
+NAME	= $(MASTERLIB)
+
+PROJ	= ftprintf
+# <+-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-' #
+# +>                                    CONFIG
+
+CC			= cc
+CFLAGS		= -Wall -Wextra -Werror
 # <+-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-' #
 # +>                                    SOURCES 
 
 SRCS	= ft_printf.c \
 		  ft_puthex_fd.c \
-		  ft_putunbr_fd.c \
+		  ft_putunbr_fd.c
 
 OBJS	= $(SRCS:.c=.o)
-
-# <+-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-' #
-# +>                                    ALIASES 
-
-CC			= cc
-CFLAGS		= -Wall -Wextra -Werror $(DEBUG)
-INCLUDE		= -I ../../ -I ../../includes
-MAKEFLAGS	+= --no-print-directory
-ifneq ($(VERBOSE),1)
-MAKEFLAGS	+= --silent
-endif
-
 # <+-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-' #
 # +>                                     CODES 
 
@@ -59,39 +54,40 @@ FULLER			= \e[7m
 # +>                                     RULES
 
 .c.o:
-	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $(<:.c=.o)
+	$(CC) $(CFLAGS) $(DFLAGS) $(OFLAGS) $(IFLAGS) -c $< $(LFLAGS) -o $(<:.c=.o)
 
-.PHONY:		all mclean clean fclean re
+all:	$(NAME)
+
+re:		fclean all
+.PHONY: all clean fclean re
 # <+-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-' #
 # +>                                   MANDATORY
 
-all:		$(MASTERLIB)
-
-$(MASTERLIB):	$(OBJS)
-	@echo "[$(YELLOW)$(BOLD)INFO$(NULL)] $(UNDLINE)Compiling$(NULL) $(NAME) library"
+$(NAME):	$(OBJS)
+	@echo "[${YELLOW}${BOLD}INFO${NULL}] ${UNDLINE}Compiling${NULL} ${PROJ} library" $(REDIR)
 	ar -rcs $(MASTERLIB) $(OBJS)
 	ranlib $(MASTERLIB)
-	@echo "[$(GREEN)$(BOLD)INFO$(NULL)] $(BOLD)Compiled $(NAME) library$(NULL)"
-	
+	@echo "[${GREEN}${BOLD}INFO${NULL}] ${BOLD}Compiled ${PROJ} library${NULL}" $(REDIR)
+
 mclean:
 ifneq (,$(shell ls $(OBJS) 2> /dev/null))
-	@echo "[$(YELLOW)$(BOLD)INFO$(NULL)] $(UNDLINE)Deleting$(NULL) $(NAME) objects"
-	rm -rf $(OBJS)
-	@echo "[$(BLUE)$(BOLD)INFO$(NULL)] $(BOLD)Deleted $(NAME) objects$(NULL)"
+	@echo "[${YELLOW}${BOLD}INFO${NULL}] ${UNDLINE}Deleting${NULL} ${PROJ} objects" $(REDIR)
+	rm -rf $(shell ls $(OBJS) 2> /dev/null)
+	@echo "[${BLUE}${BOLD}INFO${NULL}] ${BOLD}Deleted ${PROJ} objects${NULL}" $(REDIR)
 endif
-
-re:			fclean all
 # <+-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-' #
 # +>                                     BONUS
 
 bonus:	all
 
+bclean: mclean
+
 bre:	fclean bonus
 # <+-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-' #
 # +>                                     CLEAN 
 
-clean: 		mclean
+clean:	mclean bclean
 
-fclean:		clean
+fclean:	clean
 # <+-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-' #
 # vim: fdm=marker fmr=+>,<+ ts=4 sw=4 nofen noet:

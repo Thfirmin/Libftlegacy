@@ -6,7 +6,7 @@
 #    By: thfirmin <thiagofirmino2001@gmail.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/11 21:07:07 by thfirmin          #+#    #+#              #
-#    Updated: 2023/03/28 23:37:22 by thfirmin         ###   ########.fr        #
+#    Updated: 2023/04/02 08:24:06 by thfirmin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,28 +18,31 @@ export MASTERLIB	= $(addprefix $(PTH_HERE),$(NAME))
 # <+-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-' #
 # +>                                     PATHS 
 
-PTH_SRCS	= srcs/
-
+PTH_SRC		= srcs/
 PTH_HERE	= $(shell pwd)/
+PTH_INC		= includes/
 # <+-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-' #
 # +>                                    SOURCES 
 
-SRCS	= ftprintf \
-		  ft
-
-LIBS	= $(addprefix $(PTH_SRCS),$(SRCS))
+#SRCS	= $(shell ls $(PTH_SRC))
+LIBS	= $(shell find $(PTH_SRC) -mindepth 1 -maxdepth 1 -type d)
 # <+-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-' #
-# +>                                    ALIASES 
+# +>                                    CONFIG
 
-MAKEFLAGS	+= --no-print-directory
-ifneq ($(VERBOSE),1)
-	MAKEFLAGS += --silent
+export IFLAGS	= -I$(PTH_HERE) -I$(PTH_HERE)$(PTH_INC)
+MAKEFLAGS		+= --no-print-directory
+ifneq (0,$(LOG))
+	MAKEFLAGS	+= --silent
 endif
-MAKE	= make -C
+ifeq (1,$(LOG))
+	export REDIR = > /dev/null
+else ifeq (0,$(LOG))
+	export REDIR = > /dev/null
+endif
 # <+-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-' #
 # +>                                     CODES 
 
-BLANK			= \e[m
+NULL			= \e[m
 RED				= \e[38;5;9m
 YELLOW			= \e[38;5;11m
 GREEN			= \e[38;5;2m
@@ -61,32 +64,31 @@ FULLER			= \e[7m
 # <+-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-' #
 # +>                                     RULES 
 
-all:		$(SRCS)
-
-$(SRCS):
-	$(MAKE) $(PTH_SRCS)$@
+all:
+	$(foreach lib, $(LIBS), make $(RULES) -C $(lib);)
 
 bonus:
-	$(foreach libs,$(LIBS),$(MAKE) $(libs) bonus;)
+	$(foreach lib, $(LIBS), make bonus -C $(lib);)
 
 mclean:
-	$(foreach libs,$(LIBS),$(MAKE) $(libs) mclean;)
+	$(foreach lib, $(LIBS), make mclean -C $(lib);)
 
 bclean:
-	$(foreach libs,$(LIBS),$(MAKE) $(libs) bclean;)
+	$(foreach lib, $(LIBS), make bclean -C $(lib);)
 
 clean:
-	$(foreach libs,$(LIBS),$(MAKE) $(libs) clean;)
+	$(foreach lib, $(LIBS), make clean -C $(lib);)
 
-fclean:
-	$(foreach libs,$(LIBS),$(MAKE) $(libs) fclean;)
+fclean:	clean
 ifneq (,$(shell ls $(MASTERLIB) 2> /dev/null))
+	@printf "[${YELLOW}${BOLD}INFO${NULL}] ${UNDLINE}Deleting${NULL} ${NAME} library\n" $(REDIR)
 	rm -rf $(MASTERLIB)
+	@printf "[${RED}${BOLD}INFO${NULL}] ${BOLD}Deleted ${NAME} library${NULL}\n" $(REDIR)
 endif
 
-re:			fclean all
+bre: fclean bonus
 
-bre:		fclean bonus
+re: fclean all
 
 .PHONY:		all update_libs bonus mclean bclean clean fclean re bre
 # <+-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-' #
