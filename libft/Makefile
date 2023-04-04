@@ -6,7 +6,7 @@
 #    By: thfirmin <thiagofirmino2001@gmail.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/11 21:07:07 by thfirmin          #+#    #+#              #
-#    Updated: 2023/04/02 08:24:06 by thfirmin         ###   ########.fr        #
+#    Updated: 2023/04/04 13:44:54 by thfirmin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ PTH_INC		= includes/
 # <+-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-' #
 # +>                                    SOURCES 
 
-#SRCS	= $(shell ls $(PTH_SRC))
+SRCS	= $(shell ls $(PTH_SRC))
 LIBS	= $(shell find $(PTH_SRC) -mindepth 1 -maxdepth 1 -type d)
 # <+-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-' #
 # +>                                    CONFIG
@@ -64,8 +64,10 @@ FULLER			= \e[7m
 # <+-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-' #
 # +>                                     RULES 
 
-all:
-	$(foreach lib, $(LIBS), make $(RULES) -C $(lib);)
+all:	$(SRCS)
+
+$(SRCS): 
+	make -C $(PTH_SRC)$@
 
 bonus:
 	$(foreach lib, $(LIBS), make bonus -C $(lib);)
