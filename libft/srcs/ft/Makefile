@@ -6,7 +6,7 @@
 #    By: thfirmin <thfirmin@student.42.rio>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/06 14:23:56 by thfirmin          #+#    #+#              #
-#    Updated: 2023/04/02 07:39:15 by thfirmin         ###   ########.fr        #
+#    Updated: 2023/04/05 17:19:26 by thfirmin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -113,16 +113,16 @@ re:	fclean all
 # +>                                   MANDATORY
 
 $(NAME):	$(OBJS)
-	@echo "[${YELLOW}${BOLD}INFO${NULL}] ${UNDLINE}Compiling${NULL} ${PROJ} library" $(REDIR)
+	@printf "[${YELLOW}${BOLD}INFO${NULL}] ${UNDLINE}Compiling${NULL} ${PROJ} library\n" $(REDIR)
 	ar -rcs $(NAME) $(OBJS)
 	ranlib $(NAME)
-	@echo "[${GREEN}${BOLD}INFO${NULL}] ${BOLD}Compiled ${PROJ} library${NULL}" $(REDIR)
+	@printf "[${GREEN}${BOLD}INFO${NULL}] ${BOLD}Compiled ${PROJ} library${NULL}\n" $(REDIR)
 
 mclean:
 ifneq (,$(shell ls $(OBJS) 2> /dev/null))
-	@echo "[${YELLOW}${BOLD}INFO${NULL}] ${UNDLINE}Deleting${NULL} ${PROJ} objects" $(REDIR)
+	@printf "[${YELLOW}${BOLD}INFO${NULL}] ${UNDLINE}Deleting${NULL} ${PROJ} objects\n" $(REDIR)
 	rm -rf $(shell ls $(OBJS) 2> /dev/null)
-	@echo "[${BLUE}${BOLD}INFO${NULL}] ${BOLD}Deleted ${PROJ} objects${NULL}" $(REDIR)
+	@printf "[${BLUE}${BOLD}INFO${NULL}] ${BOLD}Deleted ${PROJ} objects${NULL}\n" $(REDIR)
 endif
 
 re:		fclean all
@@ -141,19 +141,19 @@ $(BN_OBJS):	$(BN_SRCS)
 		touch $@; \
 	fi
 	@if [ "$@" = "$(lastword $(BN_OBJS))" ]; then \
-		echo "[${YELLOW}${BOLD}INFO${NULL}] ${UNDINE}Compiling${NULL} ${PROJ} bonus" $(REDIR); \
+		printf "[${YELLOW}${BOLD}INFO${NULL}] ${UNDINE}Compiling${NULL} ${PROJ} bonus\n" $(REDIR); \
 		if [ "$(LOG)" = "0" ]; then printf "ar -rcs ${MASTERLIB} ${BN_OBJS}\n"; fi; \
 		ar -rcs $(MASTERLIB) $(BN_OBJS); \
 		if [ "$(LOG)" = "0" ]; then printf "ranlib ${MASTERLIB}\n"; fi; \
 		ranlib $(MASTERLIB); \
-		echo "[${GREEN}${BOLD}INFO${NULL}] ${BOLD}Compiled ${PROJ} bonus${NULL}" $(REDIR); \
+		printf "[${GREEN}${BOLD}INFO${NULL}] ${BOLD}Compiled ${PROJ} bonus${NULL}\n" $(REDIR); \
 	fi
 
 bclean:
 ifneq (,$(shell ls $(BN_OBJS) 2> /dev/null))
-	@echo "[${YELLOW}${BOLD}INFO${NULL}] ${UNDLINE}Deleting${NULL} ${PROJ} bonus objects" $(REDIR)
+	@printf "[${YELLOW}${BOLD}INFO${NULL}] ${UNDLINE}Deleting${NULL} ${PROJ} bonus objects\n" $(REDIR)
 	rm -rf $(shell ls $(BN_OBJS) 2> /dev/null)
-	@echo "[${BLUE}${BOLD}INFO${NULL}] ${BOLD}Deleted ${PROJ} bonus objects${NULL}" $(REDIR)
+	@printf "[${BLUE}${BOLD}INFO${NULL}] ${BOLD}Deleted ${PROJ} bonus objects${NULL}\n" $(REDIR)
 endif
 
 bre:	fclean bonus
