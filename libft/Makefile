@@ -6,7 +6,7 @@
 #    By: thfirmin <thiagofirmino2001@gmail.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/11 21:07:07 by thfirmin          #+#    #+#              #
-#    Updated: 2023/04/04 13:44:54 by thfirmin         ###   ########.fr        #
+#    Updated: 2023/05/12 13:26:43 by thfirmin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,12 +31,11 @@ LIBS	= $(shell find $(PTH_SRC) -mindepth 1 -maxdepth 1 -type d)
 
 export IFLAGS	= -I$(PTH_HERE) -I$(PTH_HERE)$(PTH_INC)
 MAKEFLAGS		+= --no-print-directory
-ifneq (0,$(LOG))
-	MAKEFLAGS	+= --silent
+
+ifneq (1, $(LOG))
+	MAKEFLAGS += --silent
 endif
-ifeq (1,$(LOG))
-	export REDIR = > /dev/null
-else ifeq (0,$(LOG))
+ifneq (,$(LOG))
 	export REDIR = > /dev/null
 endif
 # <+-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-' #
@@ -66,8 +65,8 @@ FULLER			= \e[7m
 
 all:	$(SRCS)
 
-$(SRCS): 
-	make -C $(PTH_SRC)$@
+$(SRCS):
+	make -C $(PTH_SRC)$@ && sleep 1
 
 bonus:
 	$(foreach lib, $(LIBS), make bonus -C $(lib);)
@@ -85,7 +84,7 @@ fclean:	clean
 ifneq (,$(shell ls $(MASTERLIB) 2> /dev/null))
 	@printf "[${YELLOW}${BOLD}INFO${NULL}] ${UNDLINE}Deleting${NULL} ${NAME} library\n" $(REDIR)
 	rm -rf $(MASTERLIB)
-	@printf "[${RED}${BOLD}INFO${NULL}] ${BOLD}Deleted ${NAME} library${NULL}\n" $(REDIR)
+	@printf "[${RED}${BOLD}INFO${NULL}] ${NAME} library ${BOLD}Deleted${NULL}\n" $(REDIR)
 endif
 
 bre: fclean bonus
