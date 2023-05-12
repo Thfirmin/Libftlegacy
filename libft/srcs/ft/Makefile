@@ -6,7 +6,7 @@
 #    By: thfirmin <thfirmin@student.42.rio>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/06 14:23:56 by thfirmin          #+#    #+#              #
-#    Updated: 2023/04/05 17:19:26 by thfirmin         ###   ########.fr        #
+#    Updated: 2023/04/28 23:53:38 by thfirmin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,7 +56,8 @@ SRCS	= ft_isalpha.c \
 		  ft_putchar_fd.c \
 		  ft_putstr_fd.c \
 		  ft_putendl_fd.c \
-		  ft_putnbr_fd.c
+		  ft_putnbr_fd.c \
+		  ft_isspace.c
 
 BN_SRCS	= ft_lstadd_back_bonus.c \
 		  ft_lstadd_front_bonus.c \
@@ -113,16 +114,16 @@ re:	fclean all
 # +>                                   MANDATORY
 
 $(NAME):	$(OBJS)
-	@printf "[${YELLOW}${BOLD}INFO${NULL}] ${UNDLINE}Compiling${NULL} ${PROJ} library\n" $(REDIR)
+	@printf "[${YELLOW}${BOLD}INFO${NULL}] ${UNDLINE}Compiling${NULL} ${PROJ} dependency\n" $(REDIR)
 	ar -rcs $(NAME) $(OBJS)
 	ranlib $(NAME)
-	@printf "[${GREEN}${BOLD}INFO${NULL}] ${BOLD}Compiled ${PROJ} library${NULL}\n" $(REDIR)
+	@printf "[${GREEN}${BOLD}INFO${NULL}] ${PROJ} dependency ${BOLD}Compiled${NULL}\n" $(REDIR)
 
 mclean:
 ifneq (,$(shell ls $(OBJS) 2> /dev/null))
 	@printf "[${YELLOW}${BOLD}INFO${NULL}] ${UNDLINE}Deleting${NULL} ${PROJ} objects\n" $(REDIR)
 	rm -rf $(shell ls $(OBJS) 2> /dev/null)
-	@printf "[${BLUE}${BOLD}INFO${NULL}] ${BOLD}Deleted ${PROJ} objects${NULL}\n" $(REDIR)
+	@printf "[${BLUE}${BOLD}INFO${NULL}] ${PROJ} objects ${BOLD}Deleted${NULL}\n" $(REDIR)
 endif
 
 re:		fclean all
@@ -133,7 +134,7 @@ bonus:	all $(BN_OBJS)
 
 $(BN_OBJS):	$(BN_SRCS)
 	@if [ "$(BN_OTOC)" = "$(findstring $(BN_OTOC),$?)" ]; then \
-		if [ "$(LOG)" = "0" ]; then \
+		if [ "$(LOG)" = "1" ]; then \
 			printf "${CC} ${CFLAGS} ${DFLAGS} ${OFLAGS} ${IFLAGS} -c $*.c ${LFLAGS} -o $@\n"; \
 		fi; \
 		$(CC) $(CFLAGS) $(DFLAGS) $(OFLAGS) $(IFLAGS) -c $*.c $(LFLAGS) -o $@; \
@@ -142,9 +143,9 @@ $(BN_OBJS):	$(BN_SRCS)
 	fi
 	@if [ "$@" = "$(lastword $(BN_OBJS))" ]; then \
 		printf "[${YELLOW}${BOLD}INFO${NULL}] ${UNDINE}Compiling${NULL} ${PROJ} bonus\n" $(REDIR); \
-		if [ "$(LOG)" = "0" ]; then printf "ar -rcs ${MASTERLIB} ${BN_OBJS}\n"; fi; \
+		if [ "$(LOG)" = "1" ]; then printf "ar -rcs ${MASTERLIB} ${BN_OBJS}\n"; fi; \
 		ar -rcs $(MASTERLIB) $(BN_OBJS); \
-		if [ "$(LOG)" = "0" ]; then printf "ranlib ${MASTERLIB}\n"; fi; \
+		if [ "$(LOG)" = "1" ]; then printf "ranlib ${MASTERLIB}\n"; fi; \
 		ranlib $(MASTERLIB); \
 		printf "[${GREEN}${BOLD}INFO${NULL}] ${BOLD}Compiled ${PROJ} bonus${NULL}\n" $(REDIR); \
 	fi

@@ -1,27 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew_bonus.c                                  :+:      :+:    :+:   */
+/*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-souz <tde-souz@student.42.rio>         +#+  +:+       +#+        */
+/*   By: thfirmin <thfirmin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/06 15:06:19 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/04/28 21:37:02 by tde-souz         ###   ########.fr       */
+/*   Created: 2023/04/15 16:19:21 by thfirmin          #+#    #+#             */
+/*   Updated: 2023/04/15 16:20:19 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-// Create a new node
-t_list	*ft_lstnew(void *content, int value)
+int	ft_isspace(int c)
 {
-	t_list	*node;
-
-	node = malloc (sizeof(t_list));
-	if (!node)
-		return (0);
-	(*node).content = content;
-	(*node).value = value;
-	(*node).next = (void *)0;
-	return (node);
+	if ((c >= 9 && c <= 13) || c == ' ')
+		return (1);
+	return (0);
 }
