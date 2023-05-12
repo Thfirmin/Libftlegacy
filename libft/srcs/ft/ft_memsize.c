@@ -1,20 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_front_bonus.c                            :+:      :+:    :+:   */
+/*   ft_memsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thfirmin <thfirmin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/06 14:57:00 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/01/20 23:48:03 by thfirmin         ###   ########.fr       */
+/*   Created: 2023/05/12 14:14:15 by thfirmin          #+#    #+#             */
+/*   Updated: 2023/05/12 14:14:52 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-// Add a node at the beginning of a list
-void	ft_lstadd_front(t_list **lst, t_list *new)
+int	ft_sumary(t_mem *mem)
 {
-	new->next = *lst;
-	*lst = new;
+	(void) mem;
+	return (0);
 }
