@@ -6,7 +6,7 @@
 /*   By: thfirmin <thfirmin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 05:13:14 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/05/12 14:11:09 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/05/14 10:53:12 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	*ft_calloc(size_t count, size_t size, char *context, t_mem **mem)
 	head = ptr;
 	while (total --)
 		*(char *)ptr++ = '\0';
-	ft_memadd_back(mem, ft_memnew(head, context));
+	if (mem)
+		ft_memadd_back(mem, ft_memnew(head, context));
 	return (head);
 }
