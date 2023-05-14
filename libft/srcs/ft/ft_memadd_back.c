@@ -1,21 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstdelone_bonus.c                               :+:      :+:    :+:   */
+/*   ft_memadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thfirmin <thfirmin@student.42.rio>         +#+  +:+       +#+        */
+/*   By: tde-souz <tde-souz@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/06 15:02:21 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/01/20 23:48:26 by thfirmin         ###   ########.fr       */
+/*   Created: 2022/10/06 14:54:49 by thfirmin          #+#    #+#             */
+/*   Updated: 2023/05/12 13:36:27 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-// Delete one gived node
-void	ft_lstdelone(t_list *lst, void (*del)(void *))
+//  Add a node at the end of a list
+void	ft_memadd_back(t_mem **mem, t_mem *new)
 {
-	if (del)
-		del(lst->content);
-	free (lst);
+	t_mem	*node;
+
+	node = *mem;
+	if (node)
+		while (node->next)
+			node = node->next;
+	if (!node)
+		*mem = new;
+	else
+		node->next = new;
 }
