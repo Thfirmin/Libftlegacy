@@ -1,27 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew_bonus.c                                  :+:      :+:    :+:   */
+/*   ft_memsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-souz <tde-souz@student.42.rio>         +#+  +:+       +#+        */
+/*   By: thfirmin <thfirmin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/06 15:06:19 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/04/28 21:37:02 by tde-souz         ###   ########.fr       */
+/*   Created: 2023/05/12 14:14:15 by thfirmin          #+#    #+#             */
+/*   Updated: 2023/05/12 14:48:07 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-// Create a new node
-t_list	*ft_lstnew(void *content, int value)
+int	ft_memsize(t_mem *mem)
 {
-	t_list	*node;
+	int	size;
 
-	node = malloc (sizeof(t_list));
-	if (!node)
-		return (0);
-	(*node).content = content;
-	(*node).value = value;
-	(*node).next = (void *)0;
-	return (node);
+	size = 0;
+	while (mem && ++size)
+		mem = mem->next;
+	return (size);
 }
