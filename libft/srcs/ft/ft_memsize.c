@@ -6,14 +6,18 @@
 /*   By: thfirmin <thfirmin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 14:14:15 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/05/12 14:14:52 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/05/12 14:48:07 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_sumary(t_mem *mem)
+int	ft_memsize(t_mem *mem)
 {
-	(void) mem;
-	return (0);
+	int	size;
+
+	size = 0;
+	while (mem && ++size)
+		mem = mem->next;
+	return (size);
 }
