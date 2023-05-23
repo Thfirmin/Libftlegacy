@@ -6,12 +6,13 @@
 /*   By: thfirmin <thfirmin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 14:11:41 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/05/12 14:44:01 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/05/23 13:26:27 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+// Thawan perdeu de vez
 void	ft_free(void *ptr, t_mem **mem)
 {
 	t_mem	*set;
